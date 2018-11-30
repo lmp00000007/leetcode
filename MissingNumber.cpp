@@ -7,11 +7,11 @@ int missingNumber(vector<int>& nums);
 
 int main()
 {
-	int temp[3] = {3,0,1};
+	int temp[7] = {3,4,0,6,1,5,2};
     int val = 11;
 	std::vector<int> numbers;
 	int result;
-	numbers.insert(numbers.begin(),temp,temp+3);
+	numbers.insert(numbers.begin(),temp,temp+7);
 
 	result = missingNumber(numbers);
 
@@ -21,24 +21,47 @@ int main()
 }
 
     int missingNumber(vector<int>& nums) {
-        int i,j,n;
+        int i,j,start,middle,end;
+        for (i=0;i<nums.size()-1;i++)
+            for (j=i+1;j<nums.size();j++)
+                if (nums[i]>nums[j]) swap(nums[i],nums[j]);
+/*                    for (i=0;i<nums.size();i++)
+                        cout << nums[i] << " ";
+                    cout << endl;*/
+        start = 0;
+        end   = nums.size();
 
-        while (i<=nums.size())
+
+/*        cout << " start: " << start;
+        cout << " middle: " << middle;
+        cout << " end: " << end; 
+        cout << endl;*/
+
+        while (end-start > 1)
         {
-            for (j=0;j<nums.size();j++)
+            middle = (end-start)/2 + start;
+            if (middle==nums[middle]) 
             {
-                if ((j==nums.size()-1) && (nums[j]!=i))
-                    return i;                
-                if (i==nums[j])
-                {
-                    for (n=0;n<nums.size();n++)
-                        cout << nums[n] << " "; 
-                    cout << endl;
-                    
-                    nums.erase(nums.begin()+j);
-                    break;
-                }
-
-            }   
+                start = middle;
+            }    
+            else 
+            {
+                end = middle;
+            }
+                cout << " start: " << start;
+                cout << " middle: " << middle;
+                cout << " end: " << end; 
+                cout << endl;
         }
+        cout << endl;
+        if (nums[middle]==middle-1)
+        {
+            if (nums[middle] > middle)
+                return middle;
+            else 
+                return nums[middle];
+        }
+        else
+            return middle;
+
     }
